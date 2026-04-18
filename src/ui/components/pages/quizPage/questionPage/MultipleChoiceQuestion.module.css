@@ -1,6 +1,30 @@
 .option {
   display: flex;
+  align-items: center;
   margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.option:focus {
+  outline: none;
+}
+
+.optionSelected {
+  border-color: #0066cc;
+  background-color: #e6f0ff;
+}
+
+.optionCorrect {
+  background-color: #d4edda;
+  border-color: #28a745;
+}
+
+.optionIncorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
 }
 
 .optionLabel {
@@ -10,8 +34,4 @@
   margin-right: 0.5rem;
   padding: 5px 8px;
   color: #aaa
-}
-
-.optionInput {
-  margin-right: 0.5rem;
 }

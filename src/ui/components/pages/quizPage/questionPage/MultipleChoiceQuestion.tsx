@@ -64,19 +64,22 @@ function MultipleChoiceQuestionNotMarked(
 
       <div style={{ marginBottom: "2rem" }}>
         {question.options.map((option, index) => {
+          const isSelected = selectedOptionId === option.id;
           return (
-            <div key={option.id} className={styles.option}>
+            <div
+              key={option.id}
+              className={`${styles.option} ${isSelected ? styles.optionSelected : ""}`}
+              tabIndex={0}
+              onClick={() => onOptionSelected(option.id)}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                  onOptionSelected(option.id);
+                }
+              }}
+            >
               <span className={styles.optionLabel}>
                 {"ABCD".split("")[index]}
               </span>
-              <input
-                type="radio"
-                className={styles.optionInput}
-                checked={selectedOptionId === option.id}
-                onChange={() => {
-                  onOptionSelected(option.id);
-                }}
-              />
               <span>{option.text}</span>
             </div>
           );
@@ -111,17 +114,17 @@ function MultipleChoiceQuestionMarked(
 
       <div style={{ marginBottom: "2rem" }}>
         {question.options.map((option, index) => {
+          const isCorrect = option.id === question.correctOptionId;
           return (
-            <div key={option.id} className={styles.option}>
+            <div
+              key={option.id}
+              className={`${styles.option} ${
+                isCorrect ? styles.optionCorrect : styles.optionIncorrect
+              }`}
+            >
               <span className={styles.optionLabel}>
                 {["A", "B", "C", "D"][index]}
               </span>
-              <input
-                type="radio"
-                className={styles.optionInput}
-                checked={selectedOptionId === option.id}
-                disabled
-              />
               <span>{option.text}</span>
             </div>
           );
