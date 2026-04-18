@@ -4,6 +4,7 @@ import { PageLayout } from "@/ui/components/layouts/PageLayout";
 import { Button } from "@/ui/components/common/Button";
 import { ProgressBar } from "@/ui/components/common/ProgressBar";
 import { MultipleChoiceQuestion } from "./MultipleChoiceQuestion";
+import { useQuestionTimer } from "@/ui/hooks/useQuestionTimer";
 import styles from "./QuizQuestionPage.module.css";
 
 export type QuizQuestionPageProps = {
@@ -19,6 +20,8 @@ export function QuizQuestionPage(
 ): React.JSX.Element {
   const { questionIndex, questionCount, question, questionState, onEvent } =
     props;
+
+  const timeSpent = useQuestionTimer();
 
   const isFirstQuestion = questionIndex === 0;
   const isLastQuestion = questionIndex === questionCount - 1;
@@ -44,6 +47,7 @@ export function QuizQuestionPage(
         <div className={styles.headerProgress}>
           <ProgressBar current={questionIndex + 1} total={questionCount} />
         </div>
+        <div className={styles.headerTimer}>{timeSpent}</div>
         <div>
           <Button size="small" onClick={() => onEvent({ kind: "CloseQuiz" })}>
             ✕
