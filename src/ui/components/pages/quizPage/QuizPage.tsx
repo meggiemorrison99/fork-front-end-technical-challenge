@@ -8,11 +8,14 @@ import { QuizQuestionPage } from "./questionPage/QuizQuestionPage";
 
 export type QuizPageProps = {
   quizState: QuizState;
+  resumeQuestionIndex: number | null;
 };
 
 export function QuizPage(props: QuizPageProps) {
+  const { quizState, resumeQuestionIndex } = props;
   const { state, handleEvent } = useQuizState({
-    quizState: props.quizState,
+    quizState,
+    resumeQuestionIndex,
   });
 
   // Save the current state
@@ -29,6 +32,9 @@ export function QuizPage(props: QuizPageProps) {
           quiz={state.quiz}
           onStart={() => {
             handleEvent({ kind: "StartQuiz" });
+          }}
+          onResume={() => {
+            handleEvent({ kind: "ResumeQuiz", resumeQuestionIndex });
           }}
         />
       );

@@ -8,10 +8,11 @@ import styles from "./QuizStartPage.module.css";
 export type QuizStartPageProps = {
   quiz: Quiz;
   onStart: () => void;
+  onResume: () => void;
 };
 
 export function QuizStartPage(props: QuizStartPageProps) {
-  const { quiz, onStart } = props;
+  const { quiz, onStart, onResume } = props;
 
   return (
     <PageLayout>

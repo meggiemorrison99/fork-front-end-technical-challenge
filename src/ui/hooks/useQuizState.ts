@@ -6,9 +6,13 @@ import { makeInitialState } from "./makeInitialState";
 
 export type UseQuizStateProps = {
   quizState: QuizState;
+  resumeQuestionIndex: number | null;
 };
 
-export function useQuizState({ quizState }: UseQuizStateProps) {
+export function useQuizState({
+  quizState,
+  resumeQuestionIndex,
+}: UseQuizStateProps) {
   const [state, setState] = React.useState(quizState);
 
   async function handleEvent(event: QuizEvent) {
@@ -157,6 +161,17 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
 
         setState(newState);
 
+        return;
+      }
+      case "ResumeQuiz": {
+        const newState: QuizState = {
+          ...state,
+          page: {
+            kind: "QuestionPage",
+            questionIndex: resumeQuestionIndex ?? 0,
+          },
+        };
+        setState(newState);
         return;
       }
 
