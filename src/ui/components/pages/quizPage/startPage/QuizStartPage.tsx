@@ -23,7 +23,7 @@ export function QuizStartPage(props: QuizStartPageProps) {
         </div>
 
         <div>
-          <Button onClick={onStart}>"Start Quiz"</Button>
+          <Button onClick={onStart}>Start Quiz</Button>
         </div>
       </main>
     </PageLayout>

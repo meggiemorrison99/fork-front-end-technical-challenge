@@ -11,7 +11,7 @@ export type UseLoadQuizStateProps = {
 export type UseLoadQuizStateResult =
   | { kind: "Loading" }
   | { kind: "Error"; error: string }
-  | { kind: "Success"; quizState: QuizState; isResuming: boolean };
+  | { kind: "Success"; quizState: QuizState };
 
 export function useLoadQuizState(props: UseLoadQuizStateProps) {
   const { quizId } = props;
@@ -29,7 +29,6 @@ export function useLoadQuizState(props: UseLoadQuizStateProps) {
           setResult({
             kind: "Success",
             quizState: quizStateFromLocalStorage,
-            isResuming: true,
           });
           return;
         }
@@ -41,7 +40,6 @@ export function useLoadQuizState(props: UseLoadQuizStateProps) {
         setResult({
           kind: "Success",
           quizState,
-          isResuming: false,
         });
       } catch (error) {
         setResult({ kind: "Error", error: String(error) });
