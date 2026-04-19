@@ -23,8 +23,9 @@ export function QuizStartPage(props: QuizStartPageProps) {
           <Markdown>{quiz.description}</Markdown>
         </div>
 
-        <div>
+        <div className={styles.footer}>
           <Button onClick={onStart}>Start Quiz</Button>
+          <Button onClick={onResume}>Resume Quiz</Button>
         </div>
       </main>
     </PageLayout>

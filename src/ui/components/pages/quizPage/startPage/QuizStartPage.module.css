@@ -1,4 +1,8 @@
 .content {
   margin-bottom: 4rem;
 }
-
+.footer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
