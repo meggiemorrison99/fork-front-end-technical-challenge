@@ -15,7 +15,7 @@ export type QuizQuestionPageProps = {
 };
 
 export function QuizQuestionPage(
-  props: QuizQuestionPageProps
+  props: QuizQuestionPageProps,
 ): React.JSX.Element {
   const { questionIndex, questionCount, question, questionState, onEvent } =
     props;
@@ -36,6 +36,10 @@ export function QuizQuestionPage(
     <Button onClick={() => onEvent({ kind: "FinishQuiz" })}>Finish</Button>
   ) : (
     <Button onClick={() => onEvent({ kind: "GoToNextQuestion" })}>Next</Button>
+  );
+
+  const restartButton = (
+    <Button onClick={() => onEvent({ kind: "RestartQuiz" })}>Restart</Button>
   );
 
   return (
@@ -70,6 +74,7 @@ export function QuizQuestionPage(
       <footer className={styles.footer}>
         {backButton}
         {nextButton}
+        {restartButton}
       </footer>
     </PageLayout>
   );

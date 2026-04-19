@@ -28,6 +28,15 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
         const newState = makeInitialState(state.quiz);
 
         setState(newState);
+        LocalStorageAPI.clearQuizState();
+
+        return;
+      }
+      case "RestartQuiz": {
+        const newState = makeInitialState(state.quiz);
+
+        setState(newState);
+        LocalStorageAPI.clearQuizState();
 
         return;
       }
@@ -47,7 +56,7 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
         const marks = state.questionStates.reduce(
           (acc, questionState) =>
             questionState.result === "Correct" ? acc + 1 : acc,
-          0
+          0,
         );
 
         const totalMarks = state.quiz.questions.length;
