@@ -14,6 +14,7 @@ export function useQuizState({
   resumeQuestionIndex,
 }: UseQuizStateProps) {
   const [state, setState] = React.useState(quizState);
+  const resumeIndexRef = React.useRef(resumeQuestionIndex);
 
   async function handleEvent(event: QuizEvent) {
     switch (event.kind) {
@@ -46,6 +47,9 @@ export function useQuizState({
       }
 
       case "CloseQuiz": {
+        if (state.page.kind === "QuestionPage") {
+          resumeIndexRef.current = state.page.questionIndex;
+        }
         const newState: QuizState = {
           ...state,
           page: { kind: "StartPage" },
@@ -168,7 +172,7 @@ export function useQuizState({
           ...state,
           page: {
             kind: "QuestionPage",
-            questionIndex: resumeQuestionIndex ?? 0,
+            questionIndex: resumeIndexRef.current ?? 0,
           },
         };
         setState(newState);
