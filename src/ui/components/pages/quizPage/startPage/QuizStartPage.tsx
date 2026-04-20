@@ -8,10 +8,11 @@ import styles from "./QuizStartPage.module.css";
 export type QuizStartPageProps = {
   quiz: Quiz;
   onStart: () => void;
+  onResume: () => void;
 };
 
 export function QuizStartPage(props: QuizStartPageProps) {
-  const { quiz, onStart } = props;
+  const { quiz, onStart, onResume } = props;
 
   return (
     <PageLayout>
@@ -22,8 +23,9 @@ export function QuizStartPage(props: QuizStartPageProps) {
           <Markdown>{quiz.description}</Markdown>
         </div>
 
-        <div>
+        <div className={styles.footer}>
           <Button onClick={onStart}>Start Quiz</Button>
+          <Button onClick={onResume}>Resume Quiz</Button>
         </div>
       </main>
     </PageLayout>

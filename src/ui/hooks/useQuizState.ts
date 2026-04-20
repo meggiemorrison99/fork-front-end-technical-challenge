@@ -6,10 +6,15 @@ import { makeInitialState } from "./makeInitialState";
 
 export type UseQuizStateProps = {
   quizState: QuizState;
+  resumeQuestionIndex: number | null;
 };
 
-export function useQuizState({ quizState }: UseQuizStateProps) {
+export function useQuizState({
+  quizState,
+  resumeQuestionIndex,
+}: UseQuizStateProps) {
   const [state, setState] = React.useState(quizState);
+  const resumeIndexRef = React.useRef(resumeQuestionIndex);
 
   async function handleEvent(event: QuizEvent) {
     switch (event.kind) {
@@ -28,11 +33,23 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
         const newState = makeInitialState(state.quiz);
 
         setState(newState);
+        LocalStorageAPI.clearQuizState();
+
+        return;
+      }
+      case "RestartQuiz": {
+        const newState = makeInitialState(state.quiz);
+
+        setState(newState);
+        LocalStorageAPI.clearQuizState();
 
         return;
       }
 
       case "CloseQuiz": {
+        if (state.page.kind === "QuestionPage") {
+          resumeIndexRef.current = state.page.questionIndex;
+        }
         const newState: QuizState = {
           ...state,
           page: { kind: "StartPage" },
@@ -47,7 +64,7 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
         const marks = state.questionStates.reduce(
           (acc, questionState) =>
             questionState.result === "Correct" ? acc + 1 : acc,
-          0
+          0,
         );
 
         const totalMarks = state.quiz.questions.length;
@@ -148,6 +165,17 @@ export function useQuizState({ quizState }: UseQuizStateProps) {
 
         setState(newState);
 
+        return;
+      }
+      case "ResumeQuiz": {
+        const newState: QuizState = {
+          ...state,
+          page: {
+            kind: "QuestionPage",
+            questionIndex: resumeIndexRef.current ?? 0,
+          },
+        };
+        setState(newState);
         return;
       }
 

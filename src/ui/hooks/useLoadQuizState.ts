@@ -11,7 +11,11 @@ export type UseLoadQuizStateProps = {
 export type UseLoadQuizStateResult =
   | { kind: "Loading" }
   | { kind: "Error"; error: string }
-  | { kind: "Success"; quizState: QuizState };
+  | {
+      kind: "Success";
+      quizState: QuizState;
+      resumeQuestionIndex: number | null;
+    };
 
 export function useLoadQuizState(props: UseLoadQuizStateProps) {
   const { quizId } = props;
@@ -26,12 +30,16 @@ export function useLoadQuizState(props: UseLoadQuizStateProps) {
         const quizStateFromLocalStorage = LocalStorageAPI.loadQuizState();
 
         if (quizStateFromLocalStorage) {
+          const savedPage = quizStateFromLocalStorage.page;
+          const resumeQuestionIndex =
+            savedPage.kind === "QuestionPage" ? savedPage.questionIndex : null;
           setResult({
             kind: "Success",
             quizState: {
               ...quizStateFromLocalStorage,
               page: { kind: "StartPage" },
             },
+            resumeQuestionIndex,
           });
           return;
         }
@@ -43,6 +51,7 @@ export function useLoadQuizState(props: UseLoadQuizStateProps) {
         setResult({
           kind: "Success",
           quizState,
+          resumeQuestionIndex: null,
         });
       } catch (error) {
         setResult({ kind: "Error", error: String(error) });

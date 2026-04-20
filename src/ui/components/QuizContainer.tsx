@@ -5,10 +5,11 @@ import { ErrorPage } from "./pages/errorPage/ErrorPage";
 
 export type QuizContainerProps = {
   quizId: string;
+  resumeQuestionIndex: number | null;
 };
 
 export function QuizContainer(props: QuizContainerProps) {
-  const { quizId } = props;
+  const { quizId, resumeQuestionIndex } = props;
 
   const result = useLoadQuizState({ quizId });
 
@@ -20,7 +21,12 @@ export function QuizContainer(props: QuizContainerProps) {
       return <ErrorPage message={result.error} />;
     }
     case "Success": {
-      return <QuizPage quizState={result.quizState} />;
+      return (
+        <QuizPage
+          quizState={result.quizState}
+          resumeQuestionIndex={result.resumeQuestionIndex}
+        />
+      );
     }
   }
 }

@@ -6,4 +6,6 @@ export type QuizEvent =
   | { kind: "FinishQuiz" }
   | { kind: "CloseQuiz" }
   | { kind: "MultipleChoiceQuestionOptionSelected"; selectedOptionId: string }
-  | { kind: "MultipleChoiceQuestionCheckAnswer" };
+  | { kind: "MultipleChoiceQuestionCheckAnswer" }
+  | { kind: "RestartQuiz" }
+  | { kind: "ResumeQuiz"; resumeQuestionIndex: number | null };
